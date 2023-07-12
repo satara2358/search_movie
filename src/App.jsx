@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { Movies } from './components/Movies.jsx'
 import { useMovies } from './hooks/useMovies'
@@ -14,8 +14,14 @@ function useSearch (){
   // almacena el valor de búsqueda y una función updateSearch que se utiliza para actualizar el 
   // estado de búsqueda. Inicialmente, el valor de búsqueda se establece en una cadena vacía.
   const [error, setError] = useState(null)
+  const isFirstInput = useRef(true)
   
   useEffect(() => {
+    if (isFirstInput.current){
+      isFirstInput.current = search === ''
+      return
+    }
+
     if (search === ''){
       setError('no se puede vacia')
       return
